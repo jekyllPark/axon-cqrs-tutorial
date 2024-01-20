@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: cqrs-tutorial
+  datasource:
+    url: jdbc:postgresql://localhost:5432/command
+    username: command
+    password: command
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      platform: postgres
+
+axon:
+  serializer:
+    general: xstream
+  axonserver:
+    servers: localhost:8124
