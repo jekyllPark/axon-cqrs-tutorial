@@ -11,7 +11,7 @@ spring:
     driverClassName: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   sql:
     init:
       platform: postgres
@@ -19,5 +19,11 @@ spring:
 axon:
   serializer:
     general: xstream
-  axonserver:
-    servers: DESKTOP-NVRBMAI:8124
+
+  axon-server:
+    servers: localhost:8124
+
+logging:
+  level:
+    com.cqrs.query: debug
+    org.axonframework : debug

@@ -22,5 +22,7 @@ axon:
   axon-server:
     servers: localhost:8124
 
-logging.level.com.cqrs.command : debug
-logging.level.org.axonframework: debug
+logging:
+  level:
+    com.cqrs.query: debug
+    org.axonframework : debug
