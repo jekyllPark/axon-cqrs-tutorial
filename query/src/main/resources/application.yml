@@ -19,5 +19,5 @@ spring:
 axon:
   serializer:
     general: xstream
-  axon server:
-    servers: localhost:8124
+  axonserver:
+    servers: DESKTOP-NVRBMAI:8124

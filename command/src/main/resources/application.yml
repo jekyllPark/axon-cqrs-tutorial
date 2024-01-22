@@ -19,5 +19,5 @@ spring:
 axon:
   serializer:
     general: xstream
-  axonserver:
+  axon-server:
     servers: localhost:8124
