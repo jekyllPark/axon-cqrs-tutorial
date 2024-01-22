@@ -16,8 +16,12 @@ spring:
     init:
       platform: postgres
 
+  logging.level.com.cqrs.command : debug
+  logging.level.org.axonframework: debug
+
 axon:
   serializer:
     general: xstream
   axon-server:
     servers: localhost:8124
+
