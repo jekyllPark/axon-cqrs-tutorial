@@ -1,5 +1,6 @@
 package com.cqrs.command.commands;
 
+import com.cqrs.command.aggregate.HolderAggregate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -10,6 +11,6 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 @Getter
 public class AccountCreationCommand {
     @TargetAggregateIdentifier
-    private String holderId;
     private String accountId;
+    private HolderAggregate holder;
 }
