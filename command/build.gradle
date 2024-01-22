@@ -1,5 +1,5 @@
 ext {
-    axonVersion = "4.2.1"
+    axonVersion = "4.5.8"
 }
 
 dependencies {

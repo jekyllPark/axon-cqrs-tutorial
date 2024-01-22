@@ -1,12 +1,12 @@
 server:
-  port: 8081
+  port: 8082
 
 spring:
   application:
-    name: cqrs-tutorial-command
+    name: cqrs-tutorial-query
   datasource:
-    url: jdbc:postgresql://localhost:5432/command
-    username: command
+    url: jdbc:postgresql://localhost:5432/query
+    username: query
     password: 1234
     driverClassName: org.postgresql.Driver
   jpa:
@@ -19,5 +19,5 @@ spring:
 axon:
   serializer:
     general: xstream
-  axonserver:
+  axon server:
     servers: localhost:8124

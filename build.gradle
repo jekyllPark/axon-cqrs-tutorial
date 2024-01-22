@@ -39,34 +39,13 @@ subprojects {
 }
 
 project(':command') {
-    bootJar {
-        enabled = false
-    }
-    jar {
-        enabled = true
-    }
     dependencies {
         implementation project(':common')
     }
 }
 
 project(':query') {
-    bootJar {
-        enabled = false
-    }
-    jar {
-        enabled = true
-    }
     dependencies {
         implementation project(':common')
-    }
-}
-
-project(':common') {
-    bootJar {
-        enabled = false
-    }
-    jar {
-        enabled = true
     }
 }
