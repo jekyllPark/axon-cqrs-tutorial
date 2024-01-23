@@ -6,12 +6,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
-@Entity
-@Table(name = "MV_ACCOUNT")
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "MV_ACCOUNT")
 public class HolderAccountSummary {
     @Id
     @Column(name = "holder_id", nullable = false)
