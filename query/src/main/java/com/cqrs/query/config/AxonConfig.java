@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 public class AxonConfig {
-
     @Bean
     public XStream xStream() {
         XStream xStream = new XStream();
@@ -24,5 +23,4 @@ public class AxonConfig {
         });
         return xStream;
     }
-
 }
