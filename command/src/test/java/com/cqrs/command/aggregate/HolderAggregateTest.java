@@ -1,0 +1,30 @@
+package com.cqrs.command.aggregate;
+
+import com.cqrs.command.commands.HolderCreationCommand;
+import com.cqrs.events.HolderCreationEvent;
+import org.axonframework.test.aggregate.AggregateTestFixture;
+import org.axonframework.test.aggregate.FixtureConfiguration;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.UUID;
+
+class HolderAggregateTest {
+    private FixtureConfiguration<HolderAggregate> fixture;
+    private static final String HOLDER_ID = UUID.randomUUID().toString();
+    private static final String HOLDER_NAME = "lee";
+    private static final String TEL = "010-9876-5432";
+    private static final String ADDRESS = "seoul";
+
+    @BeforeEach
+    void setUp() {
+        fixture = new AggregateTestFixture<>(HolderAggregate.class);
+    }
+    @Test
+    void whenCommandCreatedThenEventPublished() {
+        fixture.givenNoPriorActivity()
+                .when(new HolderCreationCommand(HOLDER_ID, HOLDER_NAME, TEL, ADDRESS))
+                .expectEvents(new HolderCreationEvent(HOLDER_ID, HOLDER_NAME, TEL, ADDRESS));
+    }
+
+}
