@@ -54,7 +54,7 @@ public class HolderAggregate {
         this.holderName = command.getHolderName();
         this.tel = command.getTel();
         this.address = command.getAddress();
-        apply(new HolderCreationEvent(command.getHolderId(), command.getHolderName(), command.getTel(), command.getAddress()));
+        apply(new HolderCreationEvent(command.getHolderId(), command.getHolderName(), command.getTel(), command.getAddress(), command.getCompany()));
     }
 
     @EventSourcingHandler

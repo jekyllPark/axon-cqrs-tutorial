@@ -31,7 +31,8 @@ public class TransactionServiceImpl implements TransactionService {
                 new HolderCreationCommand(UUID.randomUUID().toString(),
                         dto.getHolderName(),
                         dto.getTel(),
-                        dto.getAddress()
+                        dto.getAddress(),
+                        dto.getCompany()
                 ));
     }
 

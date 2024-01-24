@@ -11,6 +11,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     implementation group: 'org.axonframework', name: 'axon-spring-boot-starter', version: "${axonVersion}"
     implementation group: 'org.axonframework', name: 'axon-configuration', version: "${axonVersion}"
+    implementation group: 'org.axonframework', name: 'axon-messaging', version: "${axonVersion}"
 }
 
 test {

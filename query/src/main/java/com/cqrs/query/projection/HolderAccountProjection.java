@@ -7,7 +7,6 @@ import com.cqrs.events.WithdrawMoneyEvent;
 import com.cqrs.query.entity.HolderAccountSummary;
 import com.cqrs.query.repository.AccountRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.AllowReplay;
@@ -50,6 +49,7 @@ public class HolderAccountProjection {
     }
 
     @EventHandler
+    @Retryable(value = {NoSuchElementException.class}, maxAttempts = 5, backoff = @Backoff(delay = 1000))
     @AllowReplay
     protected void on(AccountCreationEvent event, @Timestamp Instant instant) {
         log.debug("projecting {}, timestamp : {}", event, instant.toString());
@@ -59,6 +59,7 @@ public class HolderAccountProjection {
     }
 
     @EventHandler
+    @Retryable(value = {NoSuchElementException.class}, maxAttempts = 5, backoff = @Backoff(delay = 1000))
     @AllowReplay
     protected void on(DepositMoneyEvent event, @Timestamp Instant instant) {
         log.debug("projecting {}, timestamp : {}", event, instant.toString());
@@ -68,6 +69,7 @@ public class HolderAccountProjection {
     }
 
     @EventHandler
+    @Retryable(value = {NoSuchElementException.class}, maxAttempts = 5, backoff = @Backoff(delay = 1000))
     @AllowReplay
     protected void on(WithdrawMoneyEvent event, @Timestamp Instant instant) {
         log.debug("projecting {}, timestamp : {}", event, instant.toString());

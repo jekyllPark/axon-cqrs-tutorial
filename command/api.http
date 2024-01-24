@@ -2,9 +2,10 @@ POST http://localhost:8081/holder
 Content-Type: application/json
 
 {
-  "holderName" : "park",
-  "tel" : "02-1234-5678",
-  "address" : "OO시 OO구"
+  "holderName" : "lee",
+  "tel" : "02-9876-5432",
+  "address" : "OO시 OO구",
+  "company" : "cqrs company"
 }
 
 ###
@@ -22,9 +23,9 @@ POST http://localhost:8081/deposit
 Content-Type: application/json
 
 {
-  "accountId" : "1185daf8-5546-4105-a9bc-f78556ce9624",
+  "accountId" : "b19f0aa5-1a28-4a5a-81ea-a967dc7ab41b",
   "holderId" : "a169c61a-1e47-41e8-b673-f33db08b522f",
-  "amount" : 300
+  "amount" : 200
 }
 
 ###
@@ -33,12 +34,11 @@ POST http://localhost:8081/withdrawal
 Content-Type: application/json
 
 {
-  "accountId" : "1185daf8-5546-4105-a9bc-f78556ce9624",
+  "accountId" : "b19f0aa5-1a28-4a5a-81ea-a967dc7ab41b",
   "holderId" : "a169c61a-1e47-41e8-b673-f33db08b522f",
-  "amount" : 10
+  "amount" : 30
 }
 
 ###
 
 POST http://localhost:8082/reset
-Content-Type: application/json
