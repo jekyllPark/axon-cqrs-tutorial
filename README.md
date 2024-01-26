@@ -16,3 +16,7 @@
         return xStream;
     }
 ```
+## JDK21 TimeUnit 임폴트 안 되는 이슈
+https://youtrack.jetbrains.com/issue/KT-62389/JDK-21-Cannot-access-class-TimeUnit.-Check-your-module-classpath-for-missing-or-conflicting-dependencies
+
+위 링크 참고, 해결 되지 않음. 인텔리제이 버전 및 JDK 다운그레이드 시도해보기

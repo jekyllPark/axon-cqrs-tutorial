@@ -49,3 +49,14 @@ project(':query') {
         implementation project(':common')
     }
 }
+
+project(':KakaoBank') {
+    dependencies {
+        implementation project(':common')
+    }
+}
+project(':TossBank') {
+    dependencies {
+        implementation project(':common')
+    }
+}

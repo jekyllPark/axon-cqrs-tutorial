@@ -9,4 +9,6 @@ public class WebController {
     public void p2pQueryView() {}
     @GetMapping("/subscription")
     public void subscriptionQueryView(){}
+    @GetMapping("/scatter-gather")
+    public void scatterGatherQueryView(){}
 }

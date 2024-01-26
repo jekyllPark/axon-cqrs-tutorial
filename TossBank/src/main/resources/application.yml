@@ -1,0 +1,12 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: cqrs-tutorial-TossBank
+
+axon:
+  serializer:
+    general: xstream
+  axonserver:
+    servers: localhost:8124

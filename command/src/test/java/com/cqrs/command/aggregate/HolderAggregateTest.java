@@ -15,6 +15,7 @@ class HolderAggregateTest {
     private static final String HOLDER_NAME = "lee";
     private static final String TEL = "010-9876-5432";
     private static final String ADDRESS = "seoul";
+    private static final String COMPANY = "cqrs company";
 
     @BeforeEach
     void setUp() {
@@ -23,8 +24,8 @@ class HolderAggregateTest {
     @Test
     void whenCommandCreatedThenEventPublished() {
         fixture.givenNoPriorActivity()
-                .when(new HolderCreationCommand(HOLDER_ID, HOLDER_NAME, TEL, ADDRESS))
-                .expectEvents(new HolderCreationEvent(HOLDER_ID, HOLDER_NAME, TEL, ADDRESS));
+                .when(new HolderCreationCommand(HOLDER_ID, HOLDER_NAME, TEL, ADDRESS, COMPANY))
+                .expectEvents(new HolderCreationEvent(HOLDER_ID, HOLDER_NAME, TEL, ADDRESS, COMPANY));
     }
 
 }

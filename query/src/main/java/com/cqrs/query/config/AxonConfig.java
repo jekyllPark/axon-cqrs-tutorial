@@ -5,6 +5,8 @@ import com.cqrs.events.DepositMoneyEvent;
 import com.cqrs.events.HolderCreationEvent;
 import com.cqrs.events.WithdrawMoneyEvent;
 import com.cqrs.query.entity.HolderAccountSummary;
+import com.cqrs.query.loan.LoanLimitQuery;
+import com.cqrs.query.loan.LoanLimitResult;
 import com.cqrs.query.query.AccountQuery;
 import com.cqrs.query.version.HolderCreationEventV1;
 import com.thoughtworks.xstream.XStream;
@@ -29,7 +31,8 @@ public class AxonConfig {
                 DepositMoneyEvent.class,
                 WithdrawMoneyEvent.class,
                 AccountQuery.class,
-                HolderAccountSummary.class
+                HolderAccountSummary.class,
+                LoanLimitResult.class
         });
         return xStream;
     }

@@ -1,7 +1,10 @@
 package com.cqrs.query.service;
 
 import com.cqrs.query.entity.HolderAccountSummary;
+import com.cqrs.query.loan.LoanLimitQuery;
+import com.cqrs.query.loan.LoanLimitResult;
 import com.cqrs.query.query.AccountQuery;
+import com.cqrs.query.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.config.Configuration;
@@ -12,12 +15,17 @@ import org.axonframework.queryhandling.SubscriptionQueryResult;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class QueryServiceImpl implements QueryService {
     private final Configuration configuration;
     private final QueryGateway queryGateway;
+    private final AccountRepository accountRepository;
     @Override
     public void reset() {
         configuration.eventProcessingConfiguration()
@@ -63,5 +71,13 @@ public class QueryServiceImpl implements QueryService {
                             .subscribe(emitter::next);
                 }
         );
+    }
+    @Override
+    public List<LoanLimitResult> getAccountInfoByScatterGather(String holderId) {
+        HolderAccountSummary summary = accountRepository.findByHolderId(holderId).orElseThrow();
+        return queryGateway.scatterGather(new LoanLimitQuery(summary.getHolderId(), summary.getTotalBalance()),
+                        ResponseTypes.instanceOf(LoanLimitResult.class),
+                        30, TimeUnit.SECONDS)
+                .collect(Collectors.toList());
     }
 }

@@ -1,0 +1,12 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: cqrs-tutorial-KakaoBank
+
+axon:
+  serializer:
+    general: xstream
+  axonserver:
+    servers: localhost:8124
