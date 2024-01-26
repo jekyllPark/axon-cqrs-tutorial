@@ -12,5 +12,6 @@ dependencies {
     implementation group: 'org.axonframework', name: 'axon-spring-boot-starter', version: "${axonVersion}"
     implementation group: 'org.axonframework', name: 'axon-configuration', version: "${axonVersion}"
     implementation group: 'org.springframework.retry', name: 'spring-retry'
-
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation group: 'io.projectreactor', name: 'reactor-core'
 }

@@ -1,14 +1,23 @@
 package com.cqrs.query.service;
 
+import com.cqrs.query.entity.HolderAccountSummary;
+import com.cqrs.query.query.AccountQuery;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.axonframework.config.Configuration;
 import org.axonframework.eventhandling.TrackingEventProcessor;
+import org.axonframework.messaging.responsetypes.ResponseTypes;
+import org.axonframework.queryhandling.QueryGateway;
+import org.axonframework.queryhandling.SubscriptionQueryResult;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class QueryServiceImpl implements QueryService {
     private final Configuration configuration;
+    private final QueryGateway queryGateway;
     @Override
     public void reset() {
         configuration.eventProcessingConfiguration()
@@ -20,5 +29,39 @@ public class QueryServiceImpl implements QueryService {
                     e.resetTokens();
                     e.start();
                 });
+    }
+
+    @Override
+    public HolderAccountSummary getAccountInfo(String holderId) {
+        AccountQuery accountQuery = new AccountQuery(holderId);
+        log.debug("handling {} ", accountQuery);
+        return queryGateway.query(accountQuery, ResponseTypes.instanceOf(HolderAccountSummary.class)).join();
+    }
+
+    @Override
+    public Flux<HolderAccountSummary> getAccountInfoBySubscription(String holderId) {
+        AccountQuery accountQuery = new AccountQuery(holderId);
+        log.debug("handling in subscription > {}", accountQuery);
+
+        SubscriptionQueryResult<HolderAccountSummary, HolderAccountSummary> result = queryGateway.subscriptionQuery(
+                accountQuery,
+                ResponseTypes.instanceOf(HolderAccountSummary.class),
+                ResponseTypes.instanceOf(HolderAccountSummary.class)
+        );
+
+        return Flux.create(
+                emitter -> {
+                    result.initialResult().subscribe(emitter::next);
+                    result.updates()
+                            .doOnNext(holder -> {
+                                log.debug("do on next : {}, isCanceled : {}", holder, emitter.isCancelled());
+                                if (emitter.isCancelled()) {
+                                    result.close();
+                                }
+                            })
+                            .doOnComplete(emitter::complete)
+                            .subscribe(emitter::next);
+                }
+        );
     }
 }

@@ -4,6 +4,8 @@ import com.cqrs.events.AccountCreationEvent;
 import com.cqrs.events.DepositMoneyEvent;
 import com.cqrs.events.HolderCreationEvent;
 import com.cqrs.events.WithdrawMoneyEvent;
+import com.cqrs.query.entity.HolderAccountSummary;
+import com.cqrs.query.query.AccountQuery;
 import com.cqrs.query.version.HolderCreationEventV1;
 import com.thoughtworks.xstream.XStream;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +27,9 @@ public class AxonConfig {
                 HolderCreationEvent.class,
                 AccountCreationEvent.class,
                 DepositMoneyEvent.class,
-                WithdrawMoneyEvent.class
+                WithdrawMoneyEvent.class,
+                AccountQuery.class,
+                HolderAccountSummary.class
         });
         return xStream;
     }

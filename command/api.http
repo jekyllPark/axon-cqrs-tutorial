@@ -2,10 +2,10 @@ POST http://localhost:8081/holder
 Content-Type: application/json
 
 {
-  "holderName" : "lee",
-  "tel" : "02-9876-5432",
+  "holderName" : "kim",
+  "tel" : "02-2222-3333",
   "address" : "OO시 OO구",
-  "company" : "cqrs company"
+  "company" : "sourcing company"
 }
 
 ###
@@ -36,7 +36,7 @@ Content-Type: application/json
 {
   "accountId" : "b19f0aa5-1a28-4a5a-81ea-a967dc7ab41b",
   "holderId" : "a169c61a-1e47-41e8-b673-f33db08b522f",
-  "amount" : 30
+  "amount" : 10
 }
 
 ###
