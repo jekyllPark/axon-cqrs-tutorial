@@ -27,11 +27,11 @@ public class AxonConfig {
     public Cache cache() {
         return new WeakReferenceCache();
     }
-    @Bean
-    SimpleCommandBus commandBus(TransactionManager transactionManager) {
-        log.info("SimpleCommandBus build start!");
-        return SimpleCommandBus.builder().transactionManager(transactionManager).build();
-    }
+//    @Bean
+//    SimpleCommandBus commandBus(TransactionManager transactionManager) {
+//        log.info("SimpleCommandBus build start!");
+//        return SimpleCommandBus.builder().transactionManager(transactionManager).build();
+//    }
 
     @Bean
     public Snapshotter snapshotter(EventStore eventStore, TransactionManager transactionManager) {

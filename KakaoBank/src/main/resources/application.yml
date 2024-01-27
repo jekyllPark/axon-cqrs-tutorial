@@ -4,6 +4,17 @@ server:
 spring:
   application:
     name: cqrs-tutorial-KakaoBank
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kakao
+    username: kakao
+    password: 1234
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      platform: postgres
 
 axon:
   serializer:
