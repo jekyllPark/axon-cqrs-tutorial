@@ -6,7 +6,7 @@ spring:
     name: cqrs-tutorial-KakaoBank
   datasource:
     url: jdbc:postgresql://localhost:5432/kakao
-    username: kakao
+    username: park
     password: 1234
     driverClassName: org.postgresql.Driver
   jpa:

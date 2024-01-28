@@ -42,3 +42,13 @@ Content-Type: application/json
 ###
 
 POST http://localhost:8082/reset
+
+###
+
+POST http://localhost:8083/account
+Content-Type: application/json
+
+{
+  "accountID" : "kakao_park",
+  "balance" : 100
+}

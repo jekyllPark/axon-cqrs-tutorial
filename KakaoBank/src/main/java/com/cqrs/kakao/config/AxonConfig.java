@@ -1,5 +1,6 @@
 package com.cqrs.kakao.config;
 
+import com.cqrs.kakao.command.AccountCreationCommand;
 import com.cqrs.query.loan.LoanLimitQuery;
 import com.thoughtworks.xstream.XStream;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,8 @@ public class AxonConfig {
     public XStream xStream() {
         XStream xStream = new XStream();
         xStream.allowTypes(new Class[]{
-                LoanLimitQuery.class
+                LoanLimitQuery.class,
+                AccountCreationCommand.class
         });
         return xStream;
     }

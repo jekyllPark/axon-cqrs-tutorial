@@ -1,11 +1,9 @@
 package com.cqrs.command.controller;
 
-import com.cqrs.command.dto.AccountDto;
-import com.cqrs.command.dto.DepositDto;
-import com.cqrs.command.dto.HolderDto;
-import com.cqrs.command.dto.WithdrawDto;
+import com.cqrs.command.dto.*;
 import com.cqrs.command.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,5 +33,10 @@ public class TransactionController {
     @PostMapping("/withdrawal")
     public CompletableFuture<String> withdraw(@RequestBody WithdrawDto req){
         return transactionService.withdrawMoney(req);
+    }
+
+    @PostMapping("/transfer")
+    public ResponseEntity<String> transfer(@RequestBody TransferDto dto) {
+        return ResponseEntity.ok().body(transactionService.transferMoney(dto));
     }
 }

@@ -1,14 +1,8 @@
 package com.cqrs.command.service;
 
 import com.cqrs.command.aggregate.HolderAggregate;
-import com.cqrs.command.commands.AccountCreationCommand;
-import com.cqrs.command.commands.DepositMoneyCommand;
-import com.cqrs.command.commands.HolderCreationCommand;
-import com.cqrs.command.commands.WithdrawMoneyCommand;
-import com.cqrs.command.dto.AccountDto;
-import com.cqrs.command.dto.DepositDto;
-import com.cqrs.command.dto.HolderDto;
-import com.cqrs.command.dto.WithdrawDto;
+import com.cqrs.command.commands.*;
+import com.cqrs.command.dto.*;
 import com.cqrs.command.repository.HolderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -64,5 +58,10 @@ public class TransactionServiceImpl implements TransactionService {
                         dto.getAmount()
                 )
         );
+    }
+
+    @Override
+    public String transferMoney(TransferDto dto) {
+        return commandGateway.sendAndWait(MoneyTransferCommand.of(dto));
     }
 }

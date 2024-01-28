@@ -1,5 +1,6 @@
 package com.cqrs.command.commands;
 
+import com.cqrs.command.dto.TransferDto;
 import com.cqrs.command.transfer.KakaoBankTransferCommand;
 import com.cqrs.command.transfer.TossBankTransferCommand;
 import com.cqrs.command.transfer.factory.TransferCommandFactory;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.ToString;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
+import java.util.UUID;
 import java.util.function.Function;
 
 @Builder @ToString @Getter
@@ -19,7 +21,7 @@ public class MoneyTransferCommand {
     private String transferId;
     private BankType bankType;
 
-    private enum BankType {
+    public enum BankType {
         KAKAO(command -> new TransferCommandFactory(new KakaoBankTransferCommand())),
         TOSS(command -> new TransferCommandFactory(new TossBankTransferCommand()));
         private Function<MoneyTransferCommand, TransferCommandFactory> expression;
@@ -29,5 +31,15 @@ public class MoneyTransferCommand {
             factory.create(command.getSrcAccountId(), command.getDstAccountId(), command.amount, command.getTransferId());
             return factory;
         }
+    }
+
+    public static MoneyTransferCommand of(TransferDto dto) {
+        return MoneyTransferCommand.builder()
+                .srcAccountId(dto.getSrcAccountId())
+                .dstAccountId(dto.getDstAccountId())
+                .amount(dto.getAmount())
+                .bankType(dto.getBankType())
+                .transferId(UUID.randomUUID().toString())
+                .build();
     }
 }

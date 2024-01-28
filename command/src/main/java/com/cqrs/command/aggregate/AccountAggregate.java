@@ -1,8 +1,8 @@
 package com.cqrs.command.aggregate;
 
-import com.cqrs.command.commands.AccountCreationCommand;
-import com.cqrs.command.commands.DepositMoneyCommand;
-import com.cqrs.command.commands.WithdrawMoneyCommand;
+import com.cqrs.command.commands.*;
+import com.cqrs.command.event.DepositCompletedEvent;
+import com.cqrs.event.MoneyTransferEvent;
 import com.cqrs.events.AccountCreationEvent;
 import com.cqrs.events.DepositMoneyEvent;
 import com.cqrs.events.WithdrawMoneyEvent;
@@ -90,4 +90,23 @@ public class AccountAggregate {
 //        log.debug("applying {}", event);
 //        this.balance -= event.getAmount();
 //    }
+
+    @CommandHandler
+    protected void transferMoney(MoneyTransferCommand command) {
+        log.debug("handling {}", command);
+        apply(MoneyTransferEvent.builder()
+                .srcAccountId(command.getSrcAccountId())
+                .dstAccountId(command.getDstAccountId())
+                .amount(command.getAmount())
+                .commandFactory(command.getBankType().getCommandFactory(command))
+                .transferId(command.getTransferId())
+        );
+    }
+
+    @CommandHandler
+    protected void transferMoney(TransferApprovedCommand command) {
+        log.debug("handling {}", command);
+        apply(new DepositMoneyEvent(this.holder.getHolderId(), command.getAccountId(), command.getAmount()));
+        apply(new DepositCompletedEvent(command.getAccountId(), command.getTransferId()));
+    }
 }
