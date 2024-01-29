@@ -1,18 +1,17 @@
 package com.cqrs.command.commands;
 
-import com.cqrs.command.dto.TransferDto;
 import com.cqrs.command.transfer.KakaoBankTransferCommand;
 import com.cqrs.command.transfer.TossBankTransferCommand;
 import com.cqrs.command.transfer.factory.TransferCommandFactory;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
-import java.util.UUID;
 import java.util.function.Function;
 
-@Builder @ToString @Getter
+@AllArgsConstructor
+@ToString @Getter
 public class MoneyTransferCommand {
     @TargetAggregateIdentifier
     private String dstAccountId;
@@ -31,15 +30,5 @@ public class MoneyTransferCommand {
             factory.create(command.getSrcAccountId(), command.getDstAccountId(), command.amount, command.getTransferId());
             return factory;
         }
-    }
-
-    public static MoneyTransferCommand of(TransferDto dto) {
-        return MoneyTransferCommand.builder()
-                .srcAccountId(dto.getSrcAccountId())
-                .dstAccountId(dto.getDstAccountId())
-                .amount(dto.getAmount())
-                .bankType(dto.getBankType())
-                .transferId(UUID.randomUUID().toString())
-                .build();
     }
 }

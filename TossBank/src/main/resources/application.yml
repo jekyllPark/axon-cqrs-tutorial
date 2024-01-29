@@ -4,9 +4,25 @@ server:
 spring:
   application:
     name: cqrs-tutorial-TossBank
+  datasource:
+    url: jdbc:postgresql://localhost:5432/toss
+    username: park
+    password: 1234
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      platform: postgres
 
 axon:
   serializer:
     general: xstream
   axonserver:
     servers: localhost:8124
+
+logging:
+  level:
+    com.cqrs.query: debug
+    org.axonframework: debug

@@ -2,8 +2,8 @@ POST http://localhost:8081/holder
 Content-Type: application/json
 
 {
-  "holderName" : "seo",
-  "tel" : "02-5555-6666",
+  "holderName" : "baek",
+  "tel" : "02-5555-8888",
   "address" : "OO시 OO구",
   "company" : "11 company"
 }
@@ -61,6 +61,6 @@ Content-Type: application/json
 {
 	"srcAccountId" : "kakao_park",
 	"dstAccountId" : "2a67c4d6-42fb-4763-913a-233cbc5aa59a",
-	"amount" : -30,
+	"amount" : 30,
 	"bankType" : "KAKAO"
 }

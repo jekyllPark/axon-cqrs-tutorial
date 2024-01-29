@@ -105,11 +105,6 @@ public class AccountAggregate {
         );
     }
 
-    @EventSourcingHandler
-    protected void transferMoney(MoneyTransferEvent event) {
-        log.debug("applying {}", event);
-    }
-
     @CommandHandler
     protected void transferMoney(TransferApprovedCommand command) {
         log.debug("handling {}", command);

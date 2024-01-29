@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureAfter(AxonAutoConfiguration.class)
 public class AxonConfig {
 
-    //    @Bean
+//    @Bean
 //    SimpleCommandBus commandBus(TransactionManager transactionManager) {
 //        log.info("SimpleCommandBus build start!");
 //        return SimpleCommandBus.builder().transactionManager(transactionManager).build();
@@ -65,9 +65,6 @@ public class AxonConfig {
     public XStream xStream() {
         XStream xStream = new XStream();
         xStream.addPermission(AnyTypePermission.ANY);
-        xStream.allowTypesByWildcard(new String[]{
-                "com.cqrs.*"
-        });
         return xStream;
     }
 }

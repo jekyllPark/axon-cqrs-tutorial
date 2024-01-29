@@ -10,6 +10,7 @@ import com.cqrs.query.loan.LoanLimitResult;
 import com.cqrs.query.query.AccountQuery;
 import com.cqrs.query.version.HolderCreationEventV1;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.config.EventProcessingConfigurer;
 import org.axonframework.eventhandling.TrackingEventProcessorConfiguration;
@@ -25,7 +26,7 @@ public class AxonConfig {
     @Bean
     public XStream xStream() {
         XStream xStream = new XStream();
-        xStream.allowTypesByWildcard(new String[] {"com.cqrs.*"});
+        xStream.addPermission(AnyTypePermission.ANY);
         return xStream;
     }
 
