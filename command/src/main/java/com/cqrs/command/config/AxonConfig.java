@@ -1,11 +1,9 @@
 package com.cqrs.command.config;
 
 import com.cqrs.command.aggregate.AccountAggregate;
-import com.cqrs.event.HolderCreationEvent;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.security.AnyTypePermission;
 import lombok.extern.slf4j.Slf4j;
-import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.common.caching.Cache;
 import org.axonframework.common.caching.WeakReferenceCache;
 import org.axonframework.common.transaction.TransactionManager;

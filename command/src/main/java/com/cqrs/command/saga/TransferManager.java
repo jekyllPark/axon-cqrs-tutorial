@@ -6,7 +6,6 @@ import com.cqrs.command.transfer.factory.TransferCommandFactory;
 import com.cqrs.event.transfer.MoneyTransferEvent;
 import com.cqrs.event.transfer.TransferApprovedEvent;
 import com.cqrs.event.transfer.TransferDeniedEvent;
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.modelling.saga.EndSaga;

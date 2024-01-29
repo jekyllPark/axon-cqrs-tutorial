@@ -2,17 +2,16 @@ package com.cqrs.command.aggregate;
 
 import com.cqrs.command.commands.*;
 import com.cqrs.command.event.DepositCompletedEvent;
-import com.cqrs.event.transfer.MoneyTransferEvent;
 import com.cqrs.event.AccountCreationEvent;
 import com.cqrs.event.DepositMoneyEvent;
 import com.cqrs.event.WithdrawMoneyEvent;
+import com.cqrs.event.transfer.MoneyTransferEvent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
-import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 

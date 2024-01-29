@@ -1,7 +1,5 @@
 package com.cqrs.command.transfer;
 
-import lombok.ToString;
-
 public class KakaoBankTransferCommand extends AbstractTransferCommand{
     @Override
     public String toString() {

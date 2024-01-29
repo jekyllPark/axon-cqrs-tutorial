@@ -3,8 +3,8 @@ package com.cqrs.kakao.aggregate;
 import com.cqrs.command.transfer.KakaoBankTransferCommand;
 import com.cqrs.event.transfer.TransferApprovedEvent;
 import com.cqrs.event.transfer.TransferDeniedEvent;
-import com.cqrs.kakao.event.AccountCreationEvent;
 import com.cqrs.kakao.command.AccountCreationCommand;
+import com.cqrs.kakao.event.AccountCreationEvent;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -14,8 +14,9 @@ import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
-import java.util.concurrent.TimeUnit;
+
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 

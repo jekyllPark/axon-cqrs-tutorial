@@ -1,13 +1,5 @@
 package com.cqrs.query.config;
 
-import com.cqrs.event.AccountCreationEvent;
-import com.cqrs.event.DepositMoneyEvent;
-import com.cqrs.event.HolderCreationEvent;
-import com.cqrs.event.WithdrawMoneyEvent;
-import com.cqrs.event.transfer.MoneyTransferEvent;
-import com.cqrs.query.entity.HolderAccountSummary;
-import com.cqrs.query.loan.LoanLimitResult;
-import com.cqrs.query.query.AccountQuery;
 import com.cqrs.query.version.HolderCreationEventV1;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.security.AnyTypePermission;
