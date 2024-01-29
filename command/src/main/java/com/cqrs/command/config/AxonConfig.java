@@ -1,6 +1,9 @@
 package com.cqrs.command.config;
 
 import com.cqrs.command.aggregate.AccountAggregate;
+import com.cqrs.event.HolderCreationEvent;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.common.caching.Cache;
@@ -15,9 +18,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Slf4j
-//@Configuration
-//@AutoConfigureAfter(AxonAutoConfiguration.class)
+@Configuration
+@AutoConfigureAfter(AxonAutoConfiguration.class)
 public class AxonConfig {
+
+    //    @Bean
+//    SimpleCommandBus commandBus(TransactionManager transactionManager) {
+//        log.info("SimpleCommandBus build start!");
+//        return SimpleCommandBus.builder().transactionManager(transactionManager).build();
+//    }
     @Bean
     public AggregateFactory<AccountAggregate> aggregateFactory() {
         return new GenericAggregateFactory<>(AccountAggregate.class);
@@ -27,11 +36,6 @@ public class AxonConfig {
     public Cache cache() {
         return new WeakReferenceCache();
     }
-//    @Bean
-//    SimpleCommandBus commandBus(TransactionManager transactionManager) {
-//        log.info("SimpleCommandBus build start!");
-//        return SimpleCommandBus.builder().transactionManager(transactionManager).build();
-//    }
 
     @Bean
     public Snapshotter snapshotter(EventStore eventStore, TransactionManager transactionManager) {
@@ -49,10 +53,21 @@ public class AxonConfig {
     }
 
     @Bean
-    public Repository<AccountAggregate> accountAggregateRepository(EventStore eventStore, SnapshotTriggerDefinition snapshotTriggerDefinition) {
+    public Repository<AccountAggregate> accountAggregateRepository(EventStore eventStore, SnapshotTriggerDefinition snapshotTriggerDefinition, Cache cache) {
         return EventSourcingRepository.builder(AccountAggregate.class)
                 .eventStore(eventStore)
                 .snapshotTriggerDefinition(snapshotTriggerDefinition)
+                .cache(cache)
                 .build();
+    }
+
+    @Bean
+    public XStream xStream() {
+        XStream xStream = new XStream();
+        xStream.addPermission(AnyTypePermission.ANY);
+        xStream.allowTypesByWildcard(new String[]{
+                "com.cqrs.*"
+        });
+        return xStream;
     }
 }

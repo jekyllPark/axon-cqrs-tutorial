@@ -13,10 +13,7 @@ public class AxonConfig {
     @Bean
     public XStream xStream() {
         XStream xStream = new XStream();
-        xStream.allowTypes(new Class[]{
-                LoanLimitQuery.class,
-                AccountCreationCommand.class
-        });
+        xStream.allowTypesByWildcard(new String[] {"com.cqrs.*"});
         return xStream;
     }
 }

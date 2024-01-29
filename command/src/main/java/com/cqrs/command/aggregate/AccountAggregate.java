@@ -2,16 +2,17 @@ package com.cqrs.command.aggregate;
 
 import com.cqrs.command.commands.*;
 import com.cqrs.command.event.DepositCompletedEvent;
-import com.cqrs.event.MoneyTransferEvent;
-import com.cqrs.events.AccountCreationEvent;
-import com.cqrs.events.DepositMoneyEvent;
-import com.cqrs.events.WithdrawMoneyEvent;
+import com.cqrs.event.transfer.MoneyTransferEvent;
+import com.cqrs.event.AccountCreationEvent;
+import com.cqrs.event.DepositMoneyEvent;
+import com.cqrs.event.WithdrawMoneyEvent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
+import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
@@ -94,13 +95,19 @@ public class AccountAggregate {
     @CommandHandler
     protected void transferMoney(MoneyTransferCommand command) {
         log.debug("handling {}", command);
-        apply(MoneyTransferEvent.builder()
-                .srcAccountId(command.getSrcAccountId())
-                .dstAccountId(command.getDstAccountId())
-                .amount(command.getAmount())
-                .commandFactory(command.getBankType().getCommandFactory(command))
-                .transferId(command.getTransferId())
+        apply(new MoneyTransferEvent(
+                command.getDstAccountId(),
+                command.getSrcAccountId(),
+                command.getAmount(),
+                command.getTransferId(),
+                command.getBankType().getCommandFactory(command)
+                )
         );
+    }
+
+    @EventSourcingHandler
+    protected void transferMoney(MoneyTransferEvent event) {
+        log.debug("applying {}", event);
     }
 
     @CommandHandler

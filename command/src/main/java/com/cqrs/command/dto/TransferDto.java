@@ -1,12 +1,11 @@
 package com.cqrs.command.dto;
 
-import com.cqrs.command.commands.MoneyTransferCommand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import static com.cqrs.command.commands.MoneyTransferCommand.*;
+import static com.cqrs.command.commands.MoneyTransferCommand.BankType;
 
 @Getter
 @ToString

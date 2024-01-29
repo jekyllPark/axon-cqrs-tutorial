@@ -19,5 +19,10 @@ spring:
 axon:
   serializer:
     general: xstream
-  axonserver:
+  axon-server:
     servers: localhost:8124
+
+logging:
+  level:
+    com.cqrs.query: debug
+    org.axonframework : debug

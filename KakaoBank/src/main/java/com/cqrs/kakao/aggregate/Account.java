@@ -1,8 +1,8 @@
 package com.cqrs.kakao.aggregate;
 
 import com.cqrs.command.transfer.KakaoBankTransferCommand;
-import com.cqrs.event.TransferApprovedEvent;
-import com.cqrs.event.TransferDeniedEvent;
+import com.cqrs.event.transfer.TransferApprovedEvent;
+import com.cqrs.event.transfer.TransferDeniedEvent;
 import com.cqrs.kakao.event.AccountCreationEvent;
 import com.cqrs.kakao.command.AccountCreationCommand;
 import jakarta.persistence.Entity;
@@ -14,6 +14,8 @@ import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
+import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
@@ -27,10 +29,11 @@ public class Account {
     @Id
     private String accountId;
     private Long balance;
+    private final transient Random random = new Random();
 
     @CommandHandler
     public Account(AccountCreationCommand command) throws IllegalAccessException {
-        log.debug("handling in {} {}", this.getClass().getName(), command);
+        log.debug("handling {}", command);
         if (command.getBalance() <= 0) throw new IllegalAccessException("invalid command");
         apply(new AccountCreationEvent(command.getAccountId(), command.getBalance()));
     }
@@ -44,7 +47,10 @@ public class Account {
 
     @CommandHandler
     protected void on(KakaoBankTransferCommand command) throws InterruptedException {
-        log.debug("handling in {} {}", this.getClass().getName(), command);
+        if (random.nextBoolean()) {
+            TimeUnit.SECONDS.sleep(15);
+        }
+        log.debug("handling {}", command);
         if (this.balance < command.getAmount()) {
             apply(TransferDeniedEvent.builder()
                     .srcAccountId(command.getSrcAccountId())

@@ -1,7 +1,7 @@
 package com.cqrs.command.aggregate;
 
 import com.cqrs.command.commands.HolderCreationCommand;
-import com.cqrs.events.HolderCreationEvent;
+import com.cqrs.event.HolderCreationEvent;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.jupiter.api.BeforeEach;

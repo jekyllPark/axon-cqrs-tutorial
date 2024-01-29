@@ -1,11 +1,11 @@
 package com.cqrs.query.config;
 
-import com.cqrs.events.AccountCreationEvent;
-import com.cqrs.events.DepositMoneyEvent;
-import com.cqrs.events.HolderCreationEvent;
-import com.cqrs.events.WithdrawMoneyEvent;
+import com.cqrs.event.AccountCreationEvent;
+import com.cqrs.event.DepositMoneyEvent;
+import com.cqrs.event.HolderCreationEvent;
+import com.cqrs.event.WithdrawMoneyEvent;
+import com.cqrs.event.transfer.MoneyTransferEvent;
 import com.cqrs.query.entity.HolderAccountSummary;
-import com.cqrs.query.loan.LoanLimitQuery;
 import com.cqrs.query.loan.LoanLimitResult;
 import com.cqrs.query.query.AccountQuery;
 import com.cqrs.query.version.HolderCreationEventV1;
@@ -25,15 +25,7 @@ public class AxonConfig {
     @Bean
     public XStream xStream() {
         XStream xStream = new XStream();
-        xStream.allowTypes(new Class[]{
-                HolderCreationEvent.class,
-                AccountCreationEvent.class,
-                DepositMoneyEvent.class,
-                WithdrawMoneyEvent.class,
-                AccountQuery.class,
-                HolderAccountSummary.class,
-                LoanLimitResult.class
-        });
+        xStream.allowTypesByWildcard(new String[] {"com.cqrs.*"});
         return xStream;
     }
 

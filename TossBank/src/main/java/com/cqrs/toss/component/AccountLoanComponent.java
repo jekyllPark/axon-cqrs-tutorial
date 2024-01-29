@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class AccountLoanComponent {
     @QueryHandler
     private LoanLimitResult on(LoanLimitQuery query) {
-        log.debug("handling in {}, {}", this.getClass().getName(), query);
+        log.debug("handling {}", this.getClass().getName(), query);
         return LoanLimitResult.builder()
                 .holderId(query.getHolderId())
                 .balance(query.getBalance())

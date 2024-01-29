@@ -2,10 +2,10 @@ POST http://localhost:8081/holder
 Content-Type: application/json
 
 {
-  "holderName" : "kim",
-  "tel" : "02-2222-3333",
+  "holderName" : "seo",
+  "tel" : "02-5555-6666",
   "address" : "OO시 OO구",
-  "company" : "sourcing company"
+  "company" : "11 company"
 }
 
 ###
@@ -14,7 +14,7 @@ POST http://localhost:8081/account
 Content-Type: application/json
 
 {
-  "holderId" : "a169c61a-1e47-41e8-b673-f33db08b522f"
+  "holderId" : "3d855aae-9052-45d4-aa99-4337e5593f5d"
 }
 
 ###
@@ -49,6 +49,18 @@ POST http://localhost:8083/account
 Content-Type: application/json
 
 {
-  "accountID" : "kakao_park",
+  "accountId" : "kakao_park",
   "balance" : 100
+}
+
+###
+
+POST http://localhost:8081/transfer
+Content-Type: application/json
+
+{
+	"srcAccountId" : "kakao_park",
+	"dstAccountId" : "2a67c4d6-42fb-4763-913a-233cbc5aa59a",
+	"amount" : -30,
+	"bankType" : "KAKAO"
 }

@@ -1,7 +1,7 @@
 package com.cqrs.command.aggregate;
 
 import com.cqrs.command.commands.HolderCreationCommand;
-import com.cqrs.events.HolderCreationEvent;
+import com.cqrs.event.HolderCreationEvent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
