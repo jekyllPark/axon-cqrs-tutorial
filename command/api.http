@@ -61,6 +61,6 @@ Content-Type: application/json
 {
 	"srcAccountId" : "kakao_park",
 	"dstAccountId" : "2a67c4d6-42fb-4763-913a-233cbc5aa59a",
-	"amount" : 30,
+	"amount" : 10,
 	"bankType" : "KAKAO"
 }

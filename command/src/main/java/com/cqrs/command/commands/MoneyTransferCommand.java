@@ -1,7 +1,6 @@
 package com.cqrs.command.commands;
 
-import com.cqrs.command.transfer.KakaoBankTransferCommand;
-import com.cqrs.command.transfer.TossBankTransferCommand;
+import com.cqrs.command.transfer.*;
 import com.cqrs.command.transfer.factory.TransferCommandFactory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,8 +20,8 @@ public class MoneyTransferCommand {
     private BankType bankType;
 
     public enum BankType {
-        KAKAO(command -> new TransferCommandFactory(new KakaoBankTransferCommand())),
-        TOSS(command -> new TransferCommandFactory(new TossBankTransferCommand()));
+        KAKAO(command -> new TransferCommandFactory(new KakaoBankTransferCommand(), new KakaoBankCancelTransferCommand(), new KakaoBankCompensationCancelCommand())),
+        TOSS(command -> new TransferCommandFactory(new TossBankTransferCommand(), new TossCancelTransferCommand(), new TossCompensationCancelCommand()));
         private Function<MoneyTransferCommand, TransferCommandFactory> expression;
         BankType(Function<MoneyTransferCommand, TransferCommandFactory> expression){ this.expression = expression;}
         public TransferCommandFactory getCommandFactory(MoneyTransferCommand command){

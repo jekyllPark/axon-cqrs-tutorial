@@ -1,6 +1,10 @@
 package com.cqrs.kakao.aggregate;
 
+import com.cqrs.command.transfer.KakaoBankCancelTransferCommand;
+import com.cqrs.command.transfer.KakaoBankCompensationCancelCommand;
 import com.cqrs.command.transfer.KakaoBankTransferCommand;
+import com.cqrs.event.transfer.CompletedCancelTransferEvent;
+import com.cqrs.event.transfer.CompletedCompensationCancelEvent;
 import com.cqrs.event.transfer.TransferApprovedEvent;
 import com.cqrs.event.transfer.TransferDeniedEvent;
 import com.cqrs.kakao.command.AccountCreationCommand;
@@ -74,6 +78,42 @@ public class Account {
 
     @EventSourcingHandler
     protected void on(TransferApprovedEvent event) {
+        log.debug("event {}", event);
+        this.balance -= event.getAmount();
+    }
+
+    @CommandHandler
+    protected void on(KakaoBankCancelTransferCommand command) {
+        log.info("handling {}", command);
+        apply(CompletedCancelTransferEvent.builder()
+                .srcAccountId(command.getSrcAccountId())
+                .dstAccountId(command.getDstAccountId())
+                .transferId(command.getTransferId())
+                .amount(command.getAmount())
+                .build()
+        );
+    }
+
+    @EventSourcingHandler
+    protected void on(CompletedCancelTransferEvent event) {
+        log.debug("event {}", event);
+        this.balance += event.getAmount();
+    }
+
+    @CommandHandler
+    protected void on(KakaoBankCompensationCancelCommand command) {
+        log.debug("handling {}", command);
+        apply(CompletedCompensationCancelEvent.builder()
+                .srcAccountId(command.getSrcAccountId())
+                .dstAccountId(command.getDstAccountId())
+                .transferId(command.getTransferId())
+                .amount(command.getAmount())
+                .build()
+        );
+    }
+
+    @EventSourcingHandler
+    protected void on(CompletedCompensationCancelEvent event) {
         log.debug("event {}", event);
         this.balance -= event.getAmount();
     }
