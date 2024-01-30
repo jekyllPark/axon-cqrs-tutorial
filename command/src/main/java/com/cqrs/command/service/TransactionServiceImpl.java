@@ -64,8 +64,8 @@ public class TransactionServiceImpl implements TransactionService {
     public String transferMoney(TransferDto dto) {
         log.info("dto > {}", dto);
         return commandGateway.sendAndWait(new MoneyTransferCommand(
-                dto.getDstAccountId(),
                 dto.getSrcAccountId(),
+                dto.getDstAccountId(),
                 dto.getAmount(),
                 UUID.randomUUID().toString(),
                 dto.getBankType()

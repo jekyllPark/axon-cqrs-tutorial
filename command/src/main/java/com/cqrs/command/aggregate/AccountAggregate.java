@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
+import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
@@ -64,32 +65,30 @@ public class AccountAggregate {
     protected void depositMoney(DepositMoneyCommand command) {
         log.debug("handling {}", command);
         if (command.getAmount() <= 0) throw new IllegalStateException("The amount must be greater and equal than 0");
-        this.balance += command.getAmount();
-        log.debug("balance {}", this.balance);
         apply(new DepositMoneyEvent(command.getHolderId(), command.getAccountId(), command.getAmount()));
     }
 
-//    @EventSourcingHandler
-//    protected void depositMoney(DepositMoneyEvent event) {
-//        log.debug("applying {}", event);
-//        this.balance += event.getAmount();
-//    }
+    @EventSourcingHandler
+    protected void depositMoney(DepositMoneyEvent event) {
+        log.debug("applying {}", event);
+        this.balance += event.getAmount();
+        log.debug("balance {}", this.balance);
+    }
 
     @CommandHandler
     protected void withdrawMoney(WithdrawMoneyCommand command) {
         log.debug("handling {}", command);
         if (this.balance - command.getAmount() < 0) throw new IllegalStateException("The balance is insufficient");
         else if (command.getAmount() <= 0) throw new IllegalStateException("The amount must be greater and equal than 0");
-        this.balance -= command.getAmount();
-        log.debug("balance {}", this.balance);
         apply(new WithdrawMoneyEvent(command.getHolderId(), command.getAccountId(), command.getAmount()));
     }
 
-//    @EventSourcingHandler
-//    protected void withdrawMoney(WithdrawMoneyEvent event) {
-//        log.debug("applying {}", event);
-//        this.balance -= event.getAmount();
-//    }
+    @EventSourcingHandler
+    protected void withdrawMoney(WithdrawMoneyEvent event) {
+        log.debug("applying {}", event);
+        this.balance -= event.getAmount();
+        log.debug("balance {}", this.balance);
+    }
 
     @CommandHandler
     protected void transferMoney(MoneyTransferCommand command) {

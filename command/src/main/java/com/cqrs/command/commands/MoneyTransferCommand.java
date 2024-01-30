@@ -13,9 +13,9 @@ import java.util.function.Function;
 @AllArgsConstructor
 @ToString @Getter
 public class MoneyTransferCommand {
+    private String srcAccountId;
     @TargetAggregateIdentifier
     private String dstAccountId;
-    private String srcAccountId;
     private Long amount;
     private String transferId;
     private BankType bankType;

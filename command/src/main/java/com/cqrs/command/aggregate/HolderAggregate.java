@@ -58,7 +58,7 @@ public class HolderAggregate {
     }
 
     @EventSourcingHandler
-    protected void createAccount(HolderCreationEvent event) {
+    protected void createHolder(HolderCreationEvent event) {
         log.debug("applying {}", event);
         this.holderId = event.getHolderId();
         this.holderName = event.getHolderName();

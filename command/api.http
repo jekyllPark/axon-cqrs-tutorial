@@ -2,7 +2,7 @@ POST http://localhost:8081/holder
 Content-Type: application/json
 
 {
-  "holderName" : "baek",
+  "holderName" : "yoon",
   "tel" : "02-5555-8888",
   "address" : "OO시 OO구",
   "company" : "11 company"
@@ -14,7 +14,7 @@ POST http://localhost:8081/account
 Content-Type: application/json
 
 {
-  "holderId" : "3d855aae-9052-45d4-aa99-4337e5593f5d"
+  "holderId" : "1c15b418-038c-4499-a9a4-820ae67c38b9"
 }
 
 ###
@@ -23,8 +23,8 @@ POST http://localhost:8081/deposit
 Content-Type: application/json
 
 {
-  "accountId" : "b19f0aa5-1a28-4a5a-81ea-a967dc7ab41b",
-  "holderId" : "a169c61a-1e47-41e8-b673-f33db08b522f",
+  "accountId" : "2a67c4d6-42fb-4763-913a-233cbc5aa59a",
+  "holderId" : "3d855aae-9052-45d4-aa99-4337e5593f5d",
   "amount" : 200
 }
 
@@ -34,9 +34,9 @@ POST http://localhost:8081/withdrawal
 Content-Type: application/json
 
 {
-  "accountId" : "b19f0aa5-1a28-4a5a-81ea-a967dc7ab41b",
-  "holderId" : "a169c61a-1e47-41e8-b673-f33db08b522f",
-  "amount" : 10
+  "accountId" : "2a67c4d6-42fb-4763-913a-233cbc5aa59a",
+  "holderId" : "3d855aae-9052-45d4-aa99-4337e5593f5d",
+  "amount" : 400
 }
 
 ###

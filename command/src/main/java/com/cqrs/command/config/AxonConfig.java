@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
-@AutoConfigureAfter(AxonAutoConfiguration.class)
+//@AutoConfigureAfter(AxonAutoConfiguration.class)
 public class AxonConfig {
 
 //    @Bean
@@ -25,39 +25,39 @@ public class AxonConfig {
 //        log.info("SimpleCommandBus build start!");
 //        return SimpleCommandBus.builder().transactionManager(transactionManager).build();
 //    }
-    @Bean
-    public AggregateFactory<AccountAggregate> aggregateFactory() {
-        return new GenericAggregateFactory<>(AccountAggregate.class);
-    }
-
-    @Bean
-    public Cache cache() {
-        return new WeakReferenceCache();
-    }
-
-    @Bean
-    public Snapshotter snapshotter(EventStore eventStore, TransactionManager transactionManager) {
-        return AggregateSnapshotter.builder()
-                .eventStore(eventStore)
-                .aggregateFactories(aggregateFactory())
-                .transactionManager(transactionManager)
-                .build();
-    }
-
-    @Bean
-    public SnapshotTriggerDefinition snapshotTriggerDefinition(EventStore eventStore, TransactionManager transactionManager) {
-        final int SNAPSHOT_THRESHOLD = 5;
-        return new EventCountSnapshotTriggerDefinition(snapshotter(eventStore, transactionManager), SNAPSHOT_THRESHOLD);
-    }
-
-    @Bean
-    public Repository<AccountAggregate> accountAggregateRepository(EventStore eventStore, SnapshotTriggerDefinition snapshotTriggerDefinition, Cache cache) {
-        return EventSourcingRepository.builder(AccountAggregate.class)
-                .eventStore(eventStore)
-                .snapshotTriggerDefinition(snapshotTriggerDefinition)
-                .cache(cache)
-                .build();
-    }
+//    @Bean
+//    public AggregateFactory<AccountAggregate> aggregateFactory() {
+//        return new GenericAggregateFactory<>(AccountAggregate.class);
+//    }
+//
+//    @Bean
+//    public Cache cache() {
+//        return new WeakReferenceCache();
+//    }
+//
+//    @Bean
+//    public Snapshotter snapshotter(EventStore eventStore, TransactionManager transactionManager) {
+//        return AggregateSnapshotter.builder()
+//                .eventStore(eventStore)
+//                .aggregateFactories(aggregateFactory())
+//                .transactionManager(transactionManager)
+//                .build();
+//    }
+//
+//    @Bean
+//    public SnapshotTriggerDefinition snapshotTriggerDefinition(EventStore eventStore, TransactionManager transactionManager) {
+//        final int SNAPSHOT_THRESHOLD = 5;
+//        return new EventCountSnapshotTriggerDefinition(snapshotter(eventStore, transactionManager), SNAPSHOT_THRESHOLD);
+//    }
+//
+//    @Bean
+//    public Repository<AccountAggregate> accountAggregateRepository(EventStore eventStore, SnapshotTriggerDefinition snapshotTriggerDefinition, Cache cache) {
+//        return CachingEventSourcingRepository.builder(AccountAggregate.class)
+//                .eventStore(eventStore)
+//                .snapshotTriggerDefinition(snapshotTriggerDefinition)
+//                .cache(cache)
+//                .build();
+//    }
 
     @Bean
     public XStream xStream() {
