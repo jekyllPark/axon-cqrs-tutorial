@@ -2,7 +2,7 @@ POST http://localhost:8081/holder
 Content-Type: application/json
 
 {
-  "holderName" : "yoon",
+  "holderName" : "gwak",
   "tel" : "02-5555-8888",
   "address" : "OO시 OO구",
   "company" : "11 company"
@@ -36,7 +36,7 @@ Content-Type: application/json
 {
   "accountId" : "2a67c4d6-42fb-4763-913a-233cbc5aa59a",
   "holderId" : "3d855aae-9052-45d4-aa99-4337e5593f5d",
-  "amount" : 400
+  "amount" : 1
 }
 
 ###
