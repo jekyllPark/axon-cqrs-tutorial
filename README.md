@@ -1,6 +1,7 @@
 # Axon Framework
-# Aggregate
-## 예제
+# Command
+## Aggregate
+### 예제
 ```
 
   @Aggregate
@@ -92,6 +93,81 @@ public class AxonConfig {
 }
 ```
 > axoniq 코드
+
+## Command Dispatchers
+Axon은 커맨드 핸들러에 명령을 보내기 위해 두 가지 인터페이스를 제공한다.
+1. CommandBus
+   - 커맨드 메시지를 전달하는 기능을 제공
+   - ```dispatch(CommandMessage)```, ```dispatch(CommandMessage, CommandCallback)```
+   - ```The GenericCommandMessage#asCommandMessage(Object)``` 를 통해 커맨드 메시지 생성을 할 수 있다.
+   - ```CommandBus#dispatch(CommandMessage)``` 를 통해 커맨드 메시지를 커맨드 버스에 디스패치하여 커맨드 핸들러로 전달한다.
+2. CommandGateway
+  - ```send``` 와 ```sendAndWait``` 메소드가 있는데, send는 비동기, sendAndWait는 동기 방식이다.
+  - 명령 메시지를 전달하는 기능을 제공하는 인터페이스이며, 내부적으로 CommandBus 인터페이스를 통해 메시지를 디스패치한다.
+
+## Command Handlers
+- 커맨드 핸들러는 컴포넌트에 둘 수도 있지만 상태가 포함된 에그리거트에서 직접 정의하는 것이 좋다.
+- 커맨드에 대상이 되는 객체의 에그리거트 식별자는 커맨드의 필드에 ```@TargetAggregateIdentifier``` 어노테이션이 붙어야 한다.
+```
+-- 에그리거트
+@Aggregate
+public class Account {
+  @AggregateIdentifier
+  @Id
+  private Long accountId;
+  
+  @CommandHandler
+  public Account (AccountCreationCommand command) {
+    ...로직
+  }
+  
+  .... 기타 생략
+}
+
+-- 커맨드
+public class AccountCreationCommand {
+  @TargetAggregateIdentifier  // 에그리거트의 식별자가 타겟임을 선언해줘야 함
+  private Long accountId;
+  .. 기타 필드
+}
+
+```
+> 예시
+
+- 에그리거트의 상태 변경은 반드시 이벤트 소싱 핸들러를 통해 업데이트 되어야 한다.
+  - 만약 커맨드 핸들러를 통해 처리될 경우 상태 변경에 대한 이력을 놓칠 수 있다.
+
+
+# 이벤트
+## Event Dispatchers
+이벤트 발행은 에그리거트 내 혹은 컴포넌트에서 주로 이루어진다.
+
+에그리거트 내 이벤트가 전달되는 케이스는 위 예제에서 살펴보듯 ```AggregateLifecycle#apply```를 통한 것이다.
+
+```
+  @CommandHandler
+  public AccountAggregate(AccountCreationCommand command) {
+      // .. 기타 로직
+      apply(new AccountCreationEvent(holder.getHolderId(), command.getAccountId())); // 이 부분
+  }
+```
+
+```AggregateLifecycle#apply``` 는 아래와 같은 단계를 거쳐 이벤트를 발행하게 된다.
+
+1. 에그리거트의 현재 범위를 검색한다.
+2. 마지막으로 알려진 시퀀스 번호를 활용하여 게시할 이벤트의 시퀀스 번호를 설정한다.
+3. 제공된 페이로드는(파라미터) 이벤트 메시지로 래핑되며 이전 단계의 시퀀스 번호와 에그리거트의 식별자를 수신한다.
+4. 이벤트 핸들러를 통해 이벤트를 처리하고, 에그리거트의 상태를 업데이트하기 위해 이벤트 소싱 작업이 필요하다. (```@EventSourcingHandler``)
+5. 위 일련의 과정을 거친 후 이벤트 버스를 통해 이벤트를 게시한다.
+
+- 대부분 에그리거트를 통해 이벤트를 발행하겠지만 때때로 직접 이벤트를 발행해야 할 때가 있다면? eventGateway를 활용한다.
+```
+private EventGateway eventGateway;
+
+public void dispatchEvent() {
+    eventGateway.publish(new AccountCreationEvent("holderId", "accountId"));
+}
+```
 
 # ref
 - 모든 자료는 axoniq 공식 문서로부터 참고하여 작성했습니다.

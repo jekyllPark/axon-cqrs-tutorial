@@ -31,11 +31,11 @@ public class QueryServiceImpl implements QueryService {
         configuration.eventProcessingConfiguration()
                 // 에그리거트에서 지정한 프로세스 그룹
                 .eventProcessorByProcessingGroup("accounts", TrackingEventProcessor.class)
-                .ifPresent(e -> {
-                    e.shutDown();
+                .ifPresent(tep -> {
+                    tep.shutDown();
                     // 실제 토큰 초기화
-                    e.resetTokens();
-                    e.start();
+                    tep.resetTokens();
+                    tep.start();
                 });
     }
 

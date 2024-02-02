@@ -1,16 +1,10 @@
 package com.cqrs.command.config;
 
-import com.cqrs.command.aggregate.AccountAggregate;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.security.AnyTypePermission;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.SimpleCommandBus;
-import org.axonframework.common.caching.Cache;
-import org.axonframework.common.caching.WeakReferenceCache;
 import org.axonframework.common.transaction.TransactionManager;
-import org.axonframework.eventsourcing.*;
-import org.axonframework.eventsourcing.eventstore.EventStore;
-import org.axonframework.modelling.command.Repository;
 import org.axonframework.springboot.autoconfig.AxonAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
